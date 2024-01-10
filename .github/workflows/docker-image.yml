@@ -1,1 +1,22 @@
 
+name: Docker Image CI
+
+on:
+  push
+    
+jobs:
+
+  build:
+
+    runs-on: self-hosted
+
+    steps:
+    
+    - name: Checkout Code 
+      uses: actions/checkout@v3
+
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    
+    - name: Run the image
+      run: docker run -p7001:3000 my-image-name:$(date +%s)
